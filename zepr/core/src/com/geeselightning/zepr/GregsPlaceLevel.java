@@ -4,9 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CourtyardLevel extends Level {
+public class GregsPlaceLevel extends Level{
 
-    private static final String mapLocation = "maps/courtyard.tmx";
+    private static final String mapLocation = "maps/GregsPlace.tmx";
     private static final Vector2 playerSpawn = new Vector2(300, 300);
     private static final Vector2 powerSpawn = new Vector2(250, 250);
 
@@ -17,17 +17,17 @@ public class CourtyardLevel extends Level {
     );
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{7, 12, 17};
+    private static final int[] waves = new int[]{9, 14, 19};
 
-    public CourtyardLevel(Zepr zepr) {
+    public GregsPlaceLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);
     }
 
     @Override
     public void complete() {
         // Update progress
-        if (parent.progress == parent.COURTYARD) {
-            parent.progress = parent.CSBUILDING;
+        if (parent.progress == parent.GREGSPLACE) {
+            parent.progress = parent.LIBRARY;
         }
         // The stage is being replayed
     }
