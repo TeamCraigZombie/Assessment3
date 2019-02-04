@@ -3,8 +3,6 @@ package com.geeselightning.zepr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,12 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.Color;
-
-import javax.xml.soap.Text;
 
 public class SelectLevelScreen implements Screen {
 
@@ -49,9 +44,6 @@ public class SelectLevelScreen implements Screen {
         final TextButton town = new TextButton("Town", skin);
         TextButton halifax = new TextButton("Halifax", skin);
         TextButton courtyard = new TextButton("Courtyard", skin);
-        TextButton CSBuilding = new TextButton("CS Building", skin);
-        TextButton GregsPlace = new TextButton("Greg's Place", skin);
-        TextButton library = new TextButton("Library", skin);
 
         // Creating character buttons.
         TextButton nerdy = new TextButton("Nerdy",skin);
@@ -66,11 +58,8 @@ public class SelectLevelScreen implements Screen {
         // Creating stage descriptions.
         Label title = new Label("Choose a stage and character.", skin, "subtitle");
         final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse.";
-        final String halifaxDescription = "You need to get your laptop with the work on it from your accommodation.";
+        final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
         final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
-        final String libraryDescription = "You need to do some research on how to defeat these zombies once and for all,";
-        final String csDescription = "You need to grab some tools from the Computer Science Department";
-        final String gregsDescription = "You need to head back to west campus to find other survivors.";
         final String lockedDescription = "This stage is locked until you complete the previous one.";
         final String defaultDescription ="Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
@@ -90,8 +79,7 @@ public class SelectLevelScreen implements Screen {
         // Adding menu bar.
         Table menuBar = new Table();
         menuBar.setFillParent(true);
-        //menuBar.setDebug(true); // Adds borders for the table.
-
+        // menuBar.setDebug(true); // Adds borders for the table.
         stage.addActor(menuBar);
 
         menuBar.top().left();
@@ -101,9 +89,9 @@ public class SelectLevelScreen implements Screen {
         menuBar.add(load).pad(10);
 
         // Adding stage selector buttons.
-        Table stageSelect = new Table(skin);
+        Table stageSelect = new Table();
         stageSelect.setFillParent(true);
-        //stageSelect.setDebug(true); // Adds borders for the table.
+        // stageSelect.setDebug(true); // Adds borders for the table.
         stage.addActor(stageSelect);
 
         stageSelect.center();
@@ -112,14 +100,9 @@ public class SelectLevelScreen implements Screen {
         stageSelect.add(title).colspan(3);
 
         stageSelect.row().pad(50,0,100,0);
-        stageSelect.add(town).pad(10).uniform();
-        stageSelect.add(halifax).pad(10).uniform();
-        stageSelect.add(courtyard).pad(10).uniform();
-        stageSelect.row().pad(50,0,100,0);
-        stageSelect.add(CSBuilding).pad(10).uniform();
-        stageSelect.add(GregsPlace).pad(10).uniform();
-        stageSelect.add(library).pad(10).uniform();
-
+        stageSelect.add(town).pad(10);
+        stageSelect.add(halifax).pad(10);
+        stageSelect.add(courtyard).pad(10);
 
         stageSelect.row();
         stageSelect.add(stageDescription).width(1000f).colspan(3);
@@ -184,49 +167,6 @@ public class SelectLevelScreen implements Screen {
                 public void changed(ChangeEvent event, Actor actor) {
                     stageDescription.setText(courtyardDescription);
                     stageLink = Zepr.COURTYARD;
-                }
-            });
-        }
-
-        if (parent.progress <= parent.COURTYARD) {
-            CSBuilding.setColor(Color.DARK_GRAY);
-            CSBuilding.getLabel().setColor(Color.DARK_GRAY);
-        } else {
-            // Defining actions for the CSBuilding button.
-            CSBuilding.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    stageDescription.setText(csDescription);
-                    stageLink = Zepr.CSBUILDING;
-                }
-            });
-
-        }
-
-        if (parent.progress <= parent.CSBUILDING) {
-            GregsPlace.setColor(Color.DARK_GRAY);
-            GregsPlace.getLabel().setColor(Color.DARK_GRAY);
-        } else {
-            // Defining actions for the GregsPlace Button.
-            GregsPlace.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    stageDescription.setText(gregsDescription);
-                    stageLink = Zepr.GREGSPLACE;
-                }
-            });
-        }
-
-        if (parent.progress <= parent.GREGSPLACE) {
-            library.setColor(Color.DARK_GRAY);
-            library.getLabel().setColor(Color.DARK_GRAY);
-        } else {
-            // Defining actions for the library button.
-            library.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    stageDescription.setText(libraryDescription);
-                    stageLink = Zepr.LIBRARY;
                 }
             });
         }

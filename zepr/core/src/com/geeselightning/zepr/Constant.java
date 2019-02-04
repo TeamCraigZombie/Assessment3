@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public final class Constant {
     public static final Vector2 ORIGIN = new Vector2(0, 0);
-    public static final float PLAYERSPEED = 250;
+    public static final float PLAYERSPEED = 120;
     public static final int PLAYERMAXHP = 100;
-    public static final int PLAYERDMG = 100;
-    public static final int PLAYERRANGE = 100;
+    public static final int PLAYERDMG = 20;
+    public static final int PLAYERRANGE = 50;
     public static final float PLAYERHITCOOLDOWN = 0.2f;
     public static final float ZOMBIESPEED = 80;
     public static final int ZOMBIEMAXHP = 100;

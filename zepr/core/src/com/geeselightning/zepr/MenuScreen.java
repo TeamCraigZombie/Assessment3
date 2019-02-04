@@ -42,7 +42,7 @@ public class MenuScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
         // Creating a title.
-        titleLabel = new Label("Zombie Engineering Project", skin, "subtitle");
+        titleLabel = new Label( "Zombie Engineering Project", skin, "subtitle");
 
         // Creating buttons.
         TextButton start = new TextButton("Start", skin);
