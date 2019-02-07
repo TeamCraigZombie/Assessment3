@@ -35,10 +35,14 @@ public class ZeprInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         // This causes the player to stop moving in a certain direction when the corresponding key is released.
         if (keycode == Input.Keys.W || keycode == Input.Keys.S) {
-            player.velocity.y = 0;
+            if (Gdx.input.isKeyPressed(Input.Keys.W)){player.velocity.y = player.speed;}
+            else if (Gdx.input.isKeyPressed(Input.Keys.S)){player.velocity.y = -player.speed;}
+            else {player.velocity.y = 0;}
         }
         if (keycode == Input.Keys.A || keycode == Input.Keys.D) {
-            player.velocity.x = 0;
+            if (Gdx.input.isKeyPressed(Input.Keys.A)){player.velocity.x = -player.speed;}
+            else if (Gdx.input.isKeyPressed(Input.Keys.D)){player.velocity.x = player.speed;}
+            else {player.velocity.x = 0;}
         }
         return true;
     }

@@ -7,9 +7,9 @@ public final class Constant {
     public static final float PLAYERSPEED = 120;
     public static final int PLAYERMAXHP = 100;
     public static final int PLAYERDMG = 20;
-    public static final int PLAYERRANGE = 50;
+    public static final int PLAYERRANGE = 50; //change back to 50
     public static final float PLAYERHITCOOLDOWN = 0.2f;
-    public static final float ZOMBIESPEED = 80;
+    public static final float ZOMBIESPEED = 80; //change 80
     public static final int ZOMBIEMAXHP = 100;
     public static final int ZOMBIEDMG = 10;
     public static final int ZOMBIERANGE = 20;
