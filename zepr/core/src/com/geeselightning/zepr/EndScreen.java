@@ -12,13 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MenuScreen implements Screen {
+public class EndScreen implements Screen{
 
     private Zepr parent;
     private Stage stage;
     private Label titleLabel;
 
-    public MenuScreen(Zepr zepr) {
+    public EndScreen ( Zepr zepr){
         // Constructor builds the gui of the menu screen.
         // parent allows the MenuScreen to reference the MyGdxGame class.
         parent = zepr;
@@ -42,32 +42,22 @@ public class MenuScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
         // Creating a title.
-        titleLabel = new Label("Zombie Engineering Project", skin, "subtitle");
+        titleLabel = new Label("You're a Winner", skin, "title");
 
         // Creating buttons.
-        TextButton start = new TextButton("Start", skin);
-        TextButton exit = new TextButton("Exit", skin);
+        TextButton MainMenu = new TextButton("Main Menu", skin);
 
         // Adding content to the table (screen).
         table.add(titleLabel);
         table.row().pad(10, 40, 10, 40);
-        table.add(start).fillX().uniformX();
-        table.row().pad(10, 40, 10, 40);
-        table.add(exit).fillX().uniformX();
+        table.add(MainMenu).fillX().uniformX();
 
-        // Defining actions for the exit button.
-        exit.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
 
         // Defining actions for the start button.
-        start.addListener(new ChangeListener() {
+        MainMenu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Zepr.SELECT);
+                parent.changeScreen(Zepr.MENU);
             }
         });
     }
@@ -91,17 +81,17 @@ public class MenuScreen implements Screen {
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
+
     }
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
+
     }
 
     @Override
@@ -110,4 +100,3 @@ public class MenuScreen implements Screen {
         stage.dispose();
     }
 }
-

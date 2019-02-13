@@ -6,6 +6,7 @@ public class Zepr extends Game {
 
 	private LoadingScreen loadingScreen;
 	private MenuScreen menuScreen;
+	private EndScreen endScreen;
 	private Level level;
 	private SelectLevelScreen selectLevelScreen;
 
@@ -17,7 +18,11 @@ public class Zepr extends Game {
 	public final static int TOWN = 3;
 	public final static int HALIFAX = 4;
 	public final static int COURTYARD = 5;
-	public final static int COMPLETE = 6;
+	public final static int COMPLETE = 9;
+	public final static int CSBUILDING = 6;
+	public final static int GREGSPLACE = 7;
+	public final static int LIBRARY = 8;
+
 
 
 	public void changeScreen(int screen) {
@@ -41,6 +46,22 @@ public class Zepr extends Game {
 			case COURTYARD:
 				level = new CourtyardLevel(this);
 				this.setScreen(level);
+				break;
+			case CSBUILDING:
+				level = new CSBuildingLevel(this);
+				this.setScreen(level);
+				break;
+			case GREGSPLACE:
+				level = new GregsPlaceLevel(this);
+				this.setScreen(level);
+				break;
+			case LIBRARY:
+				level = new LibraryLevel(this);
+				this.setScreen(level);
+				break;
+			case COMPLETE:
+				if (endScreen ==  null) endScreen = new EndScreen(this);
+				this.setScreen(endScreen);
 				break;
 		}
 	}
