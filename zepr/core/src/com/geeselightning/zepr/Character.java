@@ -135,6 +135,7 @@ public class Character extends Sprite {
         }
 
         // List of all corners of sprite
+        //CHANGED CODE
         ArrayList<Vector2> spriteVerticesX = new ArrayList<Vector2>(Arrays.asList(new Vector2(getX() - 5, getY()),
                 new Vector2(getX() + getWidth() + 5, getY()), new Vector2(getX() - 5, getY() + getHeight()),
                 new Vector2(getX() + getWidth() + 5, getY() + getHeight())));
@@ -144,6 +145,7 @@ public class Character extends Sprite {
                 new Vector2(getX() + getWidth(), getY() + getHeight() + 5)));
 
         wallCollision(spriteVerticesX,  spriteVerticesY, oldX, oldY);
+        ///CHANGED CODE
 
         // Make sure non of the corners goto a blocked region of the map
 //        for (Vector2 vertex : spriteVertices) {
@@ -160,6 +162,13 @@ public class Character extends Sprite {
         health -= dmg;
     }
 
+    /** New Method for wall collisions
+     *
+     * @param verticesX x direction vertices
+     * @param verticesY y direction vertices
+     * @param oldX previous x value
+     * @param oldY previous y value
+     */
     private void wallCollision(ArrayList<Vector2> verticesX, ArrayList<Vector2> verticesY, float oldX, float oldY){
         for (Vector2 vertex : verticesX) {
             if (currentLevel.isBlocked(vertex.x, vertex.y)) {
