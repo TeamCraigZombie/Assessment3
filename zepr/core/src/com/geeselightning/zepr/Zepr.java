@@ -22,6 +22,7 @@ public class Zepr extends Game {
 	public final static int CSBUILDING = 6;
 	public final static int GREGSPLACE = 7;
 	public final static int LIBRARY = 8;
+	public final static int MINIGAME = 10;
 
 
 
@@ -63,6 +64,9 @@ public class Zepr extends Game {
 				if (endScreen ==  null) endScreen = new EndScreen(this);
 				this.setScreen(endScreen);
 				break;
+			case MINIGAME:
+				level = new MiniGameLevel(this);
+				this.setScreen(level);
 		}
 	}
 
