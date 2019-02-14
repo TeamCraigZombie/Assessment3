@@ -44,6 +44,7 @@ public class Level implements Screen {
     Texture blank;
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
+    Zombie zombie = null;
 
     Label progressLabel = new Label("", skin);
     Label healthLabel = new Label("", skin);
@@ -120,8 +121,21 @@ public class Level implements Screen {
 
         for (int i = 0; i < amount; i++) {
 
-            Zombie zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                    spawnPoints.get(i % spawnPoints.size()), this));
+            int random = (int )(Math.random() * 3 + 1);
+            if (random == 1) {
+                zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+            else if (random == 2) {
+                zombie = (new ZombieMedic(new Sprite(new Texture("speed.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
+            else {
+                zombie = (new ZombieSporty(new Sprite(new Texture("heal.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
 
             // Check there isn't already a zombie there, or they will be stuck
             boolean collides = false;
