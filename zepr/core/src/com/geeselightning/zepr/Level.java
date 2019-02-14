@@ -127,12 +127,12 @@ public class Level implements Screen {
                         spawnPoints.get(i % spawnPoints.size()), this));
             }
             else if (random == 2) {
-                zombie = (new ZombieMedic(new Sprite(new Texture("speed.png")),
+                zombie = (new ZombieMedic(new Sprite(new Texture("zombie03.png")),
                         spawnPoints.get(i % spawnPoints.size()), this));
             }
 
             else {
-                zombie = (new ZombieSporty(new Sprite(new Texture("heal.png")),
+                zombie = (new ZombieSporty(new Sprite(new Texture("zombie02.png")),
                         spawnPoints.get(i % spawnPoints.size()), this));
             }
 
