@@ -177,6 +177,17 @@ public class Level implements Screen {
         return new Vector2(worldCoords3.x, worldCoords3.y);
     }
 
+    /**
+     * NEW METHOD
+     * Kills all zombies in current wave
+     */
+    public void killWave() {
+        for (int i = 0; i < aliveZombies.size(); i++) {
+            aliveZombies.get(i).getTexture().dispose();
+        }
+        aliveZombies.clear();
+    }
+
     @Override
     public void show() {
         // Start the stage unpaused.
@@ -256,14 +267,21 @@ public class Level implements Screen {
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
             if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = (int )(Math.random() * 3 + 1);
+                int random = (int )(Math.random() * 5 + 1);
                 if (random == 1) {
                     currentPowerUp = new PowerUpHeal(this);
                 } else if (random == 2){
                     // random == 2
                     currentPowerUp = new PowerUpSpeed(this);
-                } else {
+                } else if (random == 3) {
                     currentPowerUp = new PowerUpImmunity(this);
+                }
+                //NEW CODE
+                else if (random == 4) {
+                    currentPowerUp = new PowerUpInstaKill(this);
+                }
+                else {
+                    currentPowerUp = new PowerUpNuke(this);
                 }
             }
 

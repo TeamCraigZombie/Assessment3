@@ -29,4 +29,10 @@ public final class Constant {
     public static final int SPEEDUP = 50;
     public static final float SPEEDUPTIME = 10;
     public static final float IMMUNITYTIME = 5;
+
+
+    //ADDED
+    public static final float INSTAKILLTIME = 10;
+    public static final float NUKEDELAY = 0.25f;
+    public static final float NUKETIME = 1;
 }
