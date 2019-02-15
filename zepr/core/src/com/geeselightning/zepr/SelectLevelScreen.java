@@ -57,11 +57,17 @@ public class SelectLevelScreen implements Screen {
         TextButton nerdy = new TextButton("Nerdy",skin);
         TextButton sporty = new TextButton("Sporty",skin);
 
+        // TEAM CRAIG: Creating new character button
+        TextButton generic = new TextButton("Generic", skin);
+
         // Creating other buttons.
         TextButton play = new TextButton("Play", skin);
         TextButton save = new TextButton("Save", skin);
         TextButton load = new TextButton("Load", skin);
         TextButton back = new TextButton("Back", skin);
+
+        // TEAM CRAIG: Addition of Mini-Game button
+        TextButton minigame = new TextButton("Mini-Game", skin);
 
         // Creating stage descriptions.
         Label title = new Label("Choose a stage and character.", skin, "subtitle");
@@ -100,6 +106,9 @@ public class SelectLevelScreen implements Screen {
         menuBar.add(save).pad(10);
         menuBar.add(load).pad(10);
 
+        // TEAM CRAIG: Added mini-game button
+        menuBar.add(minigame).pad(10);
+
         // Adding stage selector buttons.
         Table stageSelect = new Table(skin);
         stageSelect.setFillParent(true);
@@ -129,6 +138,9 @@ public class SelectLevelScreen implements Screen {
         stageSelect.add(nerdy).pad(10);
         stageSelect.add(sporty).pad(10);
 
+        // Adding new select character Buttons
+        stageSelect.add(generic).pad(10);
+
         stageSelect.row().center();
         stageSelect.add(characterDescription).width(1000f).colspan(3);
 
@@ -149,6 +161,13 @@ public class SelectLevelScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(Zepr.MENU);
             }
+        });
+
+        // TEAM CRAIG: Defining actions for the new mini-game button.
+        minigame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(Zepr.MINIGAME);}
         });
 
         // Defining actions for the town button.
