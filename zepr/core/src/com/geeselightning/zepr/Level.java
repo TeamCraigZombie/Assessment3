@@ -192,6 +192,7 @@ public class Level implements Screen {
     }
 
     /**
+     * Team Craig
      * NEW METHOD
      * Kills all zombies in current wave
      */
@@ -281,7 +282,7 @@ public class Level implements Screen {
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
             if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = (int )(Math.random() * 5 + 1);
+                int random = 5; //(int )(Math.random() * 5 + 1);
                 if (random == 1) {
                     currentPowerUp = new PowerUpHeal(this);
                 } else if (random == 2){
@@ -408,16 +409,19 @@ public class Level implements Screen {
 
     @Override
     public void dispose() {
-        skin.dispose();
-        stage.dispose();
-        map.dispose();
-        renderer.dispose();
         if (currentPowerUp != null) {
             currentPowerUp.getTexture().dispose();
         }
-        player.getTexture().dispose();
-        for (Zombie zombie : aliveZombies) {
-            zombie.getTexture().dispose();
+        if (!aliveZombies.isEmpty()){
+            for (Zombie zombie : aliveZombies) {
+                zombie.getTexture().dispose();
+            }
         }
+        player.getTexture().dispose();
+        //renderer.dispose();  <--- EVIL cause of spontaneous crash!
+        skin.dispose();
+        stage.dispose();
+        map.dispose();
+
     }
 }

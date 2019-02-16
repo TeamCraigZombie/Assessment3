@@ -7,8 +7,8 @@ public final class Constant {
     public static final float PLAYERSPEED = 250;
     public static final int PLAYERMAXHP = 100;
 //<<<<<<< HEAD
-    public static final int PLAYERDMG = 200;
-    public static final int PLAYERRANGE = 500; //change back to 50
+    public static final int PLAYERDMG = 20;
+    public static final int PLAYERRANGE = 50; //change back to 50
     public static final float PLAYERHITCOOLDOWN = 0.2f;
     public static final float ZOMBIESPEED = 80; //change 80
     public static final int ZOMBIEMAXHP = 100;
@@ -33,4 +33,11 @@ public final class Constant {
     public static final float NUKETIME = 1;
     public static  final float ZOMBIEHEALTHYMAXHP = 150;
     public static  final float ZOMBIESPORTYSPEED = 120;
+
+    public static final float GENERICHPMULT = 1;
+    public static final float GENERICDMGMULT = 1;
+    public static final float GENERICSPEEDMULT = 1;
+    public static final float GENERICRANGEMULT = 2;
+    public static final float NERDYRANGEMULT = 1;
+    public static final float SPORTYRANGEMULT = 1;
 }
