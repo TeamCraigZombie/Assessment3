@@ -19,6 +19,8 @@ public class Player extends Character {
     String playertype;
     public boolean isImmune;
 
+    //TEAM CRAIG: ADDED
+    float rangeMult;
 
     private Player(Sprite sprite, Vector2 playerSpawn) {
         super(sprite, playerSpawn, null);
@@ -53,30 +55,52 @@ public class Player extends Character {
             dmgMult = Constant.NERDYDMGMULT;
             HPMult = Constant.NERDYHPMULT;
             speedMult = Constant.NERDYSPEEDMULT;
+            //TEAM CRAIG
+            rangeMult = Constant.NERDYRANGEMULT;
         }
         else if (playertype == "sporty"){
             dmgMult = Constant.SPORTYDMGMULT;
             HPMult = Constant.SPORTYHPMULT;
             speedMult = Constant.SPORTYSPEEDMULT;
+            //TEAM CRAIG
+            rangeMult = Constant.SPORTYRANGEMULT;
+        }
+        //TEAM CRAIG: ADDED
+        else if (playertype == "generic"){
+            dmgMult = Constant.GENERICDMGMULT;
+            HPMult = Constant.GENERICHPMULT;
+            speedMult = Constant.GENERICSPEEDMULT;
+            rangeMult = Constant.GENERICRANGEMULT;
         }
         else if (playertype == null){
             dmgMult =1;
             HPMult = 1;
             speedMult = 1;
+            //TEAM CRAIG
+            rangeMult = 1;
         }
         this.attackDamage = (int)(Constant.PLAYERDMG * dmgMult);
         this.speed = (int)(Constant.PLAYERSPEED * speedMult);
         this.health = (int)(HPMult * Constant.PLAYERMAXHP);
         this.currentLevel = level;
+        //TEAM CRAIG
+        this.hitRange = (int)(Constant.PLAYERRANGE * rangeMult);
 
         if (playertype == "nerdy") {
             mainTexture = new Texture("player01.png");
             attackTexture = new Texture("player01_attack.png");
             this.setTexture(mainTexture);
-        } else {
-            // playertype == sporty
+        }
+        else if (playertype == "sporty") {
             mainTexture = new Texture("player02.png");
             attackTexture = new Texture("player02_attack.png");
+            this.setTexture(mainTexture);
+        }
+        //TEAM CRAIG
+        else {
+            // playertype == generic
+            mainTexture = new Texture("player03.png");
+            attackTexture = new Texture("player03_attack.png");
             this.setTexture(mainTexture);
         }
     }

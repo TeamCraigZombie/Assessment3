@@ -88,6 +88,10 @@ public class SelectLevelScreen implements Screen {
         final String nerdyDescription = "Construct a mech suit for yourself so you can take more hits.";
         final String sportyDescripton = "Work out so you run faster.";
         final String defaultCharacterDescription = "Select a type of student from the buttons above.";
+
+            //TEAM CRAIG
+        final String genericDescription = "Can hit further.";
+
         characterDescription = new Label(defaultCharacterDescription,skin);
         characterDescription.setWrap(true);
         characterDescription.setWidth(100);
@@ -138,7 +142,7 @@ public class SelectLevelScreen implements Screen {
         stageSelect.add(nerdy).pad(10);
         stageSelect.add(sporty).pad(10);
 
-        // Adding new select character Buttons
+        //TEAM CRAIG: Adding new select character Buttons
         stageSelect.add(generic).pad(10);
 
         stageSelect.row().center();
@@ -265,6 +269,15 @@ public class SelectLevelScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 characterDescription.setText(sportyDescripton);
                 player.setType("sporty");
+                playerSet = true;
+            }
+        });
+        //TEAM CRAIG
+        generic.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                characterDescription.setText(genericDescription);
+                player.setType("generic");
                 playerSet = true;
             }
         });

@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class CSBuildingLevel extends Level{
 
     private static final String mapLocation = "maps/CSBuilding.tmx";
-    private static final Vector2 playerSpawn = new Vector2(300, 300);
+    private static final Vector2 playerSpawn = new Vector2(250, 375);
     private static final Vector2 powerSpawn = new Vector2(250, 250);
 
     // Defining possible zombie spawn locations on this map
