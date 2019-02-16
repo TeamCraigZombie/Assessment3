@@ -1,13 +1,14 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CSBuildingLevel extends Level{
+public class MiniGameLevel extends Level{
 
     private static final String mapLocation = "maps/CSBuilding.tmx";
-    private static final Vector2 playerSpawn = new Vector2(250, 375);
+    private static final Vector2 playerSpawn = new Vector2(300, 300);
     private static final Vector2 powerSpawn = new Vector2(250, 250);
 
     // Defining possible zombie spawn locations on this map
@@ -19,7 +20,7 @@ public class CSBuildingLevel extends Level{
     // Defining the number of zombies to be spawned for each wave
     private static final int[] waves = new int[]{8, 13, 18};
 
-    public CSBuildingLevel(Zepr zepr) {
+    public MiniGameLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);
     }
 
@@ -31,4 +32,5 @@ public class CSBuildingLevel extends Level{
         }
         // The stage is being replayed
     }
+
 }

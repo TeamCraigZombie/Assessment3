@@ -162,8 +162,8 @@ public class Character extends Sprite {
         health -= dmg;
     }
 
-    /** New Method for wall collisions
-     *
+    /** TEAM CRAIG
+     * New Method for wall collisions
      * @param verticesX x direction vertices
      * @param verticesY y direction vertices
      * @param oldX previous x value

@@ -44,6 +44,7 @@ public class Level implements Screen {
     Texture blank;
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
+    Zombie zombie = null;
 
     Label progressLabel = new Label("", skin);
     Label healthLabel = new Label("", skin);
@@ -120,8 +121,21 @@ public class Level implements Screen {
 
         for (int i = 0; i < amount; i++) {
 
-            Zombie zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                    spawnPoints.get(i % spawnPoints.size()), this));
+            int random = (int )(Math.random() * 3 + 1);
+            if (random == 1) {
+                zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+            else if (random == 2) {
+                zombie = (new ZombieMedic(new Sprite(new Texture("zombie03.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
+            else {
+                zombie = (new ZombieSporty(new Sprite(new Texture("zombie02.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
 
             // Check there isn't already a zombie there, or they will be stuck
             boolean collides = false;
@@ -178,6 +192,7 @@ public class Level implements Screen {
     }
 
     /**
+     * Team Craig
      * NEW METHOD
      * Kills all zombies in current wave
      */
@@ -267,7 +282,7 @@ public class Level implements Screen {
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
             if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = (int )(Math.random() * 5 + 1);
+                int random = 5; //(int )(Math.random() * 5 + 1);
                 if (random == 1) {
                     currentPowerUp = new PowerUpHeal(this);
                 } else if (random == 2){
@@ -394,16 +409,19 @@ public class Level implements Screen {
 
     @Override
     public void dispose() {
-        skin.dispose();
-        stage.dispose();
-        map.dispose();
-        renderer.dispose();
         if (currentPowerUp != null) {
             currentPowerUp.getTexture().dispose();
         }
-        player.getTexture().dispose();
-        for (Zombie zombie : aliveZombies) {
-            zombie.getTexture().dispose();
+        if (!aliveZombies.isEmpty()){
+            for (Zombie zombie : aliveZombies) {
+                zombie.getTexture().dispose();
+            }
         }
+        player.getTexture().dispose();
+        //renderer.dispose();  <--- EVIL cause of spontaneous crash!
+        skin.dispose();
+        stage.dispose();
+        map.dispose();
+
     }
 }
