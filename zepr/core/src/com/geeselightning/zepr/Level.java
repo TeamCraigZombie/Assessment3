@@ -39,7 +39,7 @@ public class Level implements Screen {
     private int[] waves;
     private int currentWave = 1;
     protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
-    private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
+    protected int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
     Texture blank;
     Vector2 powerSpawn;
@@ -121,6 +121,7 @@ public class Level implements Screen {
 
         for (int i = 0; i < amount; i++) {
 
+            //TEAM CRAIG:
             int random = (int )(Math.random() * 3 + 1);
             if (random == 1) {
                 zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
@@ -197,6 +198,7 @@ public class Level implements Screen {
      * Kills all zombies in current wave
      */
     public void killWave() {
+        zombiesToSpawn = 0;
         for (int i = 0; i < aliveZombies.size(); i++) {
             aliveZombies.get(i).getTexture().dispose();
         }
@@ -282,7 +284,7 @@ public class Level implements Screen {
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
             if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = 5; //(int )(Math.random() * 5 + 1);
+                int random = (int )(Math.random() * 5 + 1);
                 if (random == 1) {
                     currentPowerUp = new PowerUpHeal(this);
                 } else if (random == 2){
@@ -291,7 +293,7 @@ public class Level implements Screen {
                 } else if (random == 3) {
                     currentPowerUp = new PowerUpImmunity(this);
                 }
-                //NEW CODE
+                //TEAM CRAIG: NEW CODE
                 else if (random == 4) {
                     currentPowerUp = new PowerUpInstaKill(this);
                 }
@@ -308,12 +310,8 @@ public class Level implements Screen {
                     // If stage is being replayed complete() will stop progress being incremented.
                     isPaused = true;
                     complete();
-                    if (parent.progress == parent.COMPLETE) {
-                        parent.setScreen(new TextScreen(parent, "Game completed."));
-                    } else {
-                        parent.setScreen(new TextScreen(parent, "Level completed."));
-                    }
-                } else {
+                }
+                else {
                     // Update zombiesRemaining with the number of zombies of the new wave
                     zombiesRemaining = waves[currentWave - 1];
                     zombiesToSpawn = zombiesRemaining;

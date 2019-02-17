@@ -31,8 +31,11 @@ public final class Constant {
     public static final float INSTAKILLTIME = 10;
     public static final float NUKEDELAY = 0.25f;
     public static final float NUKETIME = 1;
-    public static  final float ZOMBIEHEALTHYMAXHP = 150;
-    public static  final float ZOMBIESPORTYSPEED = 120;
+    public static final float ZOMBIEHEALTHYMAXHP = 150;
+    public static final float ZOMBIESPORTYSPEED = 120;
+    public static final int BOSSHEALTH = 1000;
+    public static final float BOSSSPEED = 60;
+    public static final float BOSSSSPAWNTIME = 5;
 
     public static final float GENERICHPMULT = 1;
     public static final float GENERICDMGMULT = 1;

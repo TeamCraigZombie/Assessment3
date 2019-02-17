@@ -28,6 +28,7 @@ public class GregsPlaceLevel extends Level{
         // Update progress
         if (parent.progress == parent.GREGSPLACE) {
             parent.progress = parent.LIBRARY;
+            parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed
     }

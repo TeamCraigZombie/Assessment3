@@ -12,7 +12,7 @@ public class CSBuildingLevel extends Level{
 
     // Defining possible zombie spawn locations on this map
     public static final ArrayList<Vector2> zombieSpawnPoints = new ArrayList<Vector2>(
-            Arrays.asList(new Vector2(120,100), new Vector2(630,600),
+            Arrays.asList(new Vector2(40,60), new Vector2(560,740),
                     new Vector2(630,100), new Vector2(120,500))
     );
 
@@ -28,6 +28,7 @@ public class CSBuildingLevel extends Level{
         // Update progress
         if (parent.progress == parent.CSBUILDING) {
             parent.progress = parent.GREGSPLACE;
+            parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed
     }

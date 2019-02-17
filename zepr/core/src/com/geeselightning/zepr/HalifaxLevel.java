@@ -27,6 +27,7 @@ public class HalifaxLevel extends Level {
     public void complete() {
         if (parent.progress == parent.HALIFAX) {
             parent.progress = parent.COURTYARD;
+            parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed
     }
