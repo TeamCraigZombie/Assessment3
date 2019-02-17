@@ -58,7 +58,7 @@ public class SelectLevelScreen implements Screen {
         TextButton sporty = new TextButton("Sporty",skin);
 
         // TEAM CRAIG: Creating new character button
-        TextButton generic = new TextButton("Generic", skin);
+        TextButton generic = new TextButton("Engineer", skin);
 
         // Creating other buttons.
         TextButton play = new TextButton("Play", skin);
@@ -89,8 +89,8 @@ public class SelectLevelScreen implements Screen {
         final String sportyDescripton = "Work out so you run faster.";
         final String defaultCharacterDescription = "Select a type of student from the buttons above.";
 
-            //TEAM CRAIG
-        final String genericDescription = "Can hit further.";
+        //TEAM CRAIG New character description label
+        final String genericDescription = "Get your angles right to improve your damage range.";
 
         characterDescription = new Label(defaultCharacterDescription,skin);
         characterDescription.setWrap(true);
