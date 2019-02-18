@@ -6,13 +6,16 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * CLASS ADDED BY TEAM CRAIG
+ */
 public class LibraryLevel extends Level {
 
     private static final String mapLocation = "maps/library.tmx";
     private static final Vector2 playerSpawn = new Vector2(300, 300);
     private static final Vector2 powerSpawn = new Vector2(250, 250);
 
-    //TEAM CRAIG:
+    //TEAM CRAIG: ADDED
     private boolean bossRound = false;
     private float timer = 0;
 
@@ -31,7 +34,7 @@ public class LibraryLevel extends Level {
 
     @Override
     public void complete() {
-        //TEAM CRAIG:
+        //TEAM CRAIG: ADDED
         if (!bossRound){
             isPaused = false;
             currentPowerUp = new PowerUpHeal(this);
@@ -51,7 +54,7 @@ public class LibraryLevel extends Level {
     }
 
     /**
-     * TEAM CRAIG:
+     * TEAM CRAIG: ADDED
      * Handles rendering for boss round.
      * @param delta time
      */

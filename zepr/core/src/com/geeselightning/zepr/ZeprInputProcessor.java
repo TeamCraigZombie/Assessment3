@@ -34,7 +34,7 @@ public class ZeprInputProcessor implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         // This causes the player to stop moving in a certain direction when the corresponding key is released.
-        //CHANGED CODE
+        //TEAM CRAIG: CHANGED CODE
         if (keycode == Input.Keys.W || keycode == Input.Keys.S) {
             if (Gdx.input.isKeyPressed(Input.Keys.W)){player.velocity.y = player.speed;}
             else if (Gdx.input.isKeyPressed(Input.Keys.S)){player.velocity.y = -player.speed;}
@@ -46,7 +46,6 @@ public class ZeprInputProcessor implements InputProcessor {
             else {player.velocity.x = 0;}
         }
         return true;
-        ///CHANGED CODE
     }
 
     @Override
@@ -57,12 +56,16 @@ public class ZeprInputProcessor implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         player.attack = true;
+        //TEAM CRAIG: ADDED CODE
+        player.miniGameAttack = true;
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         player.attack = false;
+        //TEAM CRAIG: ADDED CODE
+        player.miniGameAttack = false;
         return true;
     }
 

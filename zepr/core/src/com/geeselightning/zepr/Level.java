@@ -24,18 +24,18 @@ public class Level implements Screen {
 
     protected Zepr parent;
     private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
-    private Player player;
+    protected OrthogonalTiledMapRenderer renderer;
+    protected OrthographicCamera camera;
+    protected Player player;
     protected ArrayList<Zombie> aliveZombies = new ArrayList<Zombie>();
     private String mapLocation;
     private Vector2 playerSpawn;
     public ArrayList<Vector2> zombieSpawnPoints;
     private ZeprInputProcessor inputProcessor = new ZeprInputProcessor();
     protected boolean isPaused;
-    private Stage stage;
-    private Table table;
-    private Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+    protected Stage stage;
+    protected Table table;
+    protected Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private int[] waves;
     private int currentWave = 1;
     protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
@@ -46,9 +46,12 @@ public class Level implements Screen {
     PowerUp currentPowerUp = null;
     Zombie zombie = null;
 
-    Label progressLabel = new Label("", skin);
-    Label healthLabel = new Label("", skin);
-    Label powerupLabel = new Label("", skin);
+    private Label progressLabel = new Label("", skin);
+    private Label healthLabel = new Label("", skin);
+    private Label powerupLabel = new Label("", skin);
+
+    //TEAM CRAIG: ADDED
+    private float attackTimer = Constant.PLAYERHITCOOLDOWN;
 
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, ArrayList<Vector2> zombieSpawnPoints, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
@@ -229,49 +232,7 @@ public class Level implements Screen {
     @Override
     public void render(float delta) {
         if (isPaused) {
-            // Clears the screen to black.
-            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            TextButton resume = new TextButton("Resume", skin);
-            TextButton exit = new TextButton("Exit", skin);
-
-            if (!pauseButton) {
-
-                table.clear();
-
-                table.center();
-                table.add(resume).pad(10);
-                table.row();
-                table.add(exit);
-                pauseButton = true;
-
-            }
-
-            // Input processor has to be changed back once unpaused.
-            Gdx.input.setInputProcessor(stage);
-
-            // Defining actions for the resume button.
-            resume.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    isPaused = false;
-                    // Change input processor back
-                    Gdx.input.setInputProcessor(inputProcessor);
-                    pauseButton = false;
-                }
-            });
-
-            // Defining actions for the exit button.
-            exit.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    parent.changeScreen(Zepr.SELECT);
-                }
-            });
-
-            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-            stage.draw();
+            this.pause();
         } else {
             // Clears the screen to black.
             Gdx.gl.glClearColor(0f, 0f, 0f, 1);
@@ -329,6 +290,7 @@ public class Level implements Screen {
 
             player.draw(renderer.getBatch());
 
+
             // Resolve all possible attacks
             for (int i = 0; i < aliveZombies.size(); i++) {
                 Zombie zombie = aliveZombies.get(i);
@@ -336,9 +298,18 @@ public class Level implements Screen {
                 // facing a player.
                 // Player will only attack in the reverse situation but player.attack must also be true. This is
                 //controlled by the ZeprInputProcessor. So the player will only attack when the user clicks.
-                if (player.attack) {
+                if (player.attack && attackTimer > 0) {
                     player.attack(zombie, delta);
+
+                    //TEAM CRAIG: ADDED
+                    attackTimer -= delta;
                 }
+                //TEAM CRAIG: ADDED
+                else {
+                    player.attack = false;
+                    attackTimer = Constant.PLAYERHITCOOLDOWN;
+                }
+
                 zombie.attack(player, delta);
 
                 // Draw zombies
@@ -392,8 +363,52 @@ public class Level implements Screen {
         camera.viewportWidth = width;
     }
 
+    //TEAM CRAIG: Code moved from render
     @Override
     public void pause() {
+        // Clears the screen to black.
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        TextButton resume = new TextButton("Resume", skin);
+        TextButton exit = new TextButton("Exit", skin);
+
+        if (!pauseButton) {
+
+            table.clear();
+
+            table.center();
+            table.add(resume).pad(10);
+            table.row();
+            table.add(exit);
+            pauseButton = true;
+
+        }
+
+        // Input processor has to be changed back once unpaused.
+        Gdx.input.setInputProcessor(stage);
+
+        // Defining actions for the resume button.
+        resume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                isPaused = false;
+                // Change input processor back
+                Gdx.input.setInputProcessor(inputProcessor);
+                pauseButton = false;
+            }
+        });
+
+        // Defining actions for the exit button.
+        exit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(Zepr.SELECT);
+            }
+        });
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 
     @Override
@@ -405,6 +420,9 @@ public class Level implements Screen {
         dispose();
     }
 
+    /**
+     * TEAM CRAIG: CHANGED
+     */
     @Override
     public void dispose() {
         if (currentPowerUp != null) {

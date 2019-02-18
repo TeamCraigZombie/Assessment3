@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * CLASS ADDED BY TEAM CRAIG
+ */
 public class CourtyardBoss extends Zombie {
 
     public CourtyardBoss(Sprite sprite, Vector2 zombieSpawn, Level currentLevel) {

@@ -49,6 +49,8 @@ public class SelectLevelScreen implements Screen {
         final TextButton town = new TextButton("Town", skin);
         TextButton halifax = new TextButton("Halifax", skin);
         TextButton courtyard = new TextButton("Courtyard", skin);
+
+        //TEAM CRAIG: Addition of new level buttons
         TextButton CSBuilding = new TextButton("CS Building", skin);
         TextButton GregsPlace = new TextButton("Greg's Place", skin);
         TextButton library = new TextButton("Library", skin);
@@ -74,9 +76,12 @@ public class SelectLevelScreen implements Screen {
         final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse.";
         final String halifaxDescription = "You need to get your laptop with the work on it from your accommodation.";
         final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
+
+        //TEAM CRAIG: New level descriptors
         final String libraryDescription = "You need to do some research on how to defeat these zombies once and for all,";
         final String csDescription = "You need to grab some tools from the Computer Science Department";
         final String gregsDescription = "You need to head back to west campus to find other survivors.";
+
         final String lockedDescription = "This stage is locked until you complete the previous one.";
         final String defaultDescription ="Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
@@ -211,11 +216,12 @@ public class SelectLevelScreen implements Screen {
             });
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.COURTYARD) {
             CSBuilding.setColor(Color.DARK_GRAY);
             CSBuilding.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the CSBuilding button.
+            //TEAM CRAIG: Defining actions for the CSBuilding button.
             CSBuilding.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -226,11 +232,12 @@ public class SelectLevelScreen implements Screen {
 
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.CSBUILDING) {
             GregsPlace.setColor(Color.DARK_GRAY);
             GregsPlace.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the GregsPlace Button.
+            //TEAM CRAIG: Defining actions for the GregsPlace Button.
             GregsPlace.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -240,11 +247,12 @@ public class SelectLevelScreen implements Screen {
             });
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.GREGSPLACE) {
             library.setColor(Color.DARK_GRAY);
             library.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the library button.
+            //TEAM CRAIG: Defining actions for the library button.
             library.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -272,7 +280,9 @@ public class SelectLevelScreen implements Screen {
                 playerSet = true;
             }
         });
-        //TEAM CRAIG
+
+
+        //TEAM CRAIG: Defining actions for the engineer button.
         generic.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
