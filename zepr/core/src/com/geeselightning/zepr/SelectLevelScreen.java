@@ -1,6 +1,7 @@
 package com.geeselightning.zepr;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -46,8 +47,8 @@ public class SelectLevelScreen implements Screen {
         TextButton courtyard = new TextButton("Courtyard", skin);
 
         // Creating character buttons.
-        TextButton nerdy = new TextButton("Nerdy",skin);
-        TextButton sporty = new TextButton("Sporty",skin);
+        TextButton nerdy = new TextButton("Nerdy", skin);
+        TextButton sporty = new TextButton("Sporty", skin);
 
         // Creating other buttons.
         TextButton play = new TextButton("Play", skin);
@@ -61,7 +62,7 @@ public class SelectLevelScreen implements Screen {
         final String halifaxDescription = "You need to get your laptop with the work on it from your accomodation.";
         final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
         final String lockedDescription = "This stage is locked until you complete the previous one.";
-        final String defaultDescription ="Select a stage from the buttons above.";
+        final String defaultDescription = "Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
         stageDescription.setWrap(true);
         stageDescription.setWidth(100);
@@ -71,7 +72,7 @@ public class SelectLevelScreen implements Screen {
         final String nerdyDescription = "Construct a mech suit for yourself so you can take more hits.";
         final String sportyDescripton = "Work out so you run faster.";
         final String defaultCharacterDescription = "Select a type of student from the buttons above.";
-        characterDescription = new Label(defaultCharacterDescription,skin);
+        characterDescription = new Label(defaultCharacterDescription, skin);
         characterDescription.setWrap(true);
         characterDescription.setWidth(100);
         characterDescription.setAlignment(Align.center);
@@ -99,7 +100,7 @@ public class SelectLevelScreen implements Screen {
         stageSelect.row();
         stageSelect.add(title).colspan(3);
 
-        stageSelect.row().pad(50,0,100,0);
+        stageSelect.row().pad(50, 0, 100, 0);
         stageSelect.add(town).pad(10);
         stageSelect.add(halifax).pad(10);
         stageSelect.add(courtyard).pad(10);
@@ -200,7 +201,30 @@ public class SelectLevelScreen implements Screen {
             }
         });
 
+        // Defining action for savegame
+        save.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Preferences saveGame = Gdx.app.getPreferences("userSave");
+
+                saveGame.putInteger("level", parent.progress);
+                saveGame.putString("character", player.playertype);
+            }
+        });
+
+        load.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Preferences savedGame = Gdx.app.getPreferences("userSave");
+
+                Integer level = savedGame.getInteger("level");
+                String character = savedGame.getString("character");
+
+                parent.progress = level;
+            }
+        });
     }
+
 
     @Override
     public void render(float delta) {
