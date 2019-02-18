@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * CLASS ADDED BY TEAM CRAIG
+ */
 public class GregsPlaceLevel extends Level{
 
     private static final String mapLocation = "maps/GregsPlace.tmx";
@@ -28,6 +31,7 @@ public class GregsPlaceLevel extends Level{
         // Update progress
         if (parent.progress == parent.GREGSPLACE) {
             parent.progress = parent.LIBRARY;
+            parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed
     }

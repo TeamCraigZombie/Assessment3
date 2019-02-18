@@ -2,6 +2,7 @@ package com.geeselightning.zepr;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Base64Coder;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.graphics.Color;
 
@@ -28,6 +31,9 @@ public class SelectLevelScreen implements Screen {
     private int stageLink = -1;
     private boolean playerSet = false;
     Player player = Player.getInstance();
+
+    //TEAM CRAIG: ADDED
+    private FileHandle fileHandle = Gdx.files.local("data.txt");
 
     public SelectLevelScreen(Zepr zepr) {
 
@@ -49,6 +55,8 @@ public class SelectLevelScreen implements Screen {
         final TextButton town = new TextButton("Town", skin);
         TextButton halifax = new TextButton("Halifax", skin);
         TextButton courtyard = new TextButton("Courtyard", skin);
+
+        //TEAM CRAIG: Addition of new level buttons
         TextButton CSBuilding = new TextButton("CS Building", skin);
         TextButton GregsPlace = new TextButton("Greg's Place", skin);
         TextButton library = new TextButton("Library", skin);
@@ -58,7 +66,7 @@ public class SelectLevelScreen implements Screen {
         TextButton sporty = new TextButton("Sporty",skin);
 
         // TEAM CRAIG: Creating new character button
-        TextButton generic = new TextButton("Generic", skin);
+        TextButton generic = new TextButton("Engineer", skin);
 
         // Creating other buttons.
         TextButton play = new TextButton("Play", skin);
@@ -74,9 +82,12 @@ public class SelectLevelScreen implements Screen {
         final String townDescription = "You wake up hungover in town to discover there is a zombie apocalypse.";
         final String halifaxDescription = "You need to get your laptop with the work on it from your accommodation.";
         final String courtyardDescription = "You should go to Courtyard and get some breakfast.";
+
+        //TEAM CRAIG: New level descriptors
         final String libraryDescription = "You need to do some research on how to defeat these zombies once and for all,";
         final String csDescription = "You need to grab some tools from the Computer Science Department";
         final String gregsDescription = "You need to head back to west campus to find other survivors.";
+
         final String lockedDescription = "This stage is locked until you complete the previous one.";
         final String defaultDescription ="Select a stage from the buttons above.";
         stageDescription = new Label(defaultDescription, skin);
@@ -89,8 +100,8 @@ public class SelectLevelScreen implements Screen {
         final String sportyDescripton = "Work out so you run faster.";
         final String defaultCharacterDescription = "Select a type of student from the buttons above.";
 
-            //TEAM CRAIG
-        final String genericDescription = "Can hit further.";
+        //TEAM CRAIG New character description label
+        final String genericDescription = "Get your angles right to improve your damage range.";
 
         characterDescription = new Label(defaultCharacterDescription,skin);
         characterDescription.setWrap(true);
@@ -211,11 +222,12 @@ public class SelectLevelScreen implements Screen {
             });
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.COURTYARD) {
             CSBuilding.setColor(Color.DARK_GRAY);
             CSBuilding.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the CSBuilding button.
+            //TEAM CRAIG: Defining actions for the CSBuilding button.
             CSBuilding.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -226,11 +238,12 @@ public class SelectLevelScreen implements Screen {
 
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.CSBUILDING) {
             GregsPlace.setColor(Color.DARK_GRAY);
             GregsPlace.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the GregsPlace Button.
+            //TEAM CRAIG: Defining actions for the GregsPlace Button.
             GregsPlace.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -240,11 +253,12 @@ public class SelectLevelScreen implements Screen {
             });
         }
 
+        //TEAM CRAIG:
         if (parent.progress <= parent.GREGSPLACE) {
             library.setColor(Color.DARK_GRAY);
             library.getLabel().setColor(Color.DARK_GRAY);
         } else {
-            // Defining actions for the library button.
+            //TEAM CRAIG: Defining actions for the library button.
             library.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -272,7 +286,9 @@ public class SelectLevelScreen implements Screen {
                 playerSet = true;
             }
         });
-        //TEAM CRAIG
+
+
+        //TEAM CRAIG: Defining actions for the engineer button.
         generic.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -288,6 +304,25 @@ public class SelectLevelScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if ((stageLink != -1) && (playerSet == true)) {
                     parent.changeScreen(stageLink);
+                }
+            }
+        });
+
+        //TEAM CRAIG: ADDED
+        // Defining actions for the save button.
+        save.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                fileHandle.writeString(Integer.toString(parent.progress), false);
+            }
+        });
+        // Defining actions for the load button.
+        load.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (fileHandle.exists()) {
+                    parent.progress = Integer.parseInt(fileHandle.readString());
+                    parent.changeScreen(Zepr.SELECT);
                 }
             }
         });

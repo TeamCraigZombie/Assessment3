@@ -6,13 +6,12 @@ public final class Constant {
     public static final Vector2 ORIGIN = new Vector2(0, 0);
     public static final float PLAYERSPEED = 250;
     public static final int PLAYERMAXHP = 100;
-//<<<<<<< HEAD
-    public static final int PLAYERDMG = 20;
+    public static final int PLAYERDMG = 30;    //original 20, changed to 30 for better game play
     public static final int PLAYERRANGE = 50; //change back to 50
     public static final float PLAYERHITCOOLDOWN = 0.2f;
     public static final float ZOMBIESPEED = 80; //change 80
     public static final int ZOMBIEMAXHP = 100;
-    public static final int ZOMBIEDMG = 10;
+    public static final int ZOMBIEDMG = 10;     //change back to 10
     public static final int ZOMBIERANGE = 20;
     public static final float ZOMBIEHITCOOLDOWN = 1;
     public static final float NERDYHPMULT = 1.5f;
@@ -27,12 +26,17 @@ public final class Constant {
     public static final float IMMUNITYTIME = 5;
 
 
-    //ADDED
-    public static final float INSTAKILLTIME = 10;
+    //TEAM CRAIG: ADDED
+    public static final float INSTAKILLTIME = 5;
+    public static final int INSTAKILLDMG = 100;
     public static final float NUKEDELAY = 0.25f;
     public static final float NUKETIME = 1;
-    public static  final float ZOMBIEHEALTHYMAXHP = 150;
-    public static  final float ZOMBIESPORTYSPEED = 120;
+    public static final float ZOMBIEHEALTHYMAXHP = 200;
+    public static final float ZOMBIESPORTYSPEED = 120;
+    public static final int BOSSHEALTH = 1000;
+    public static final float BOSSSPEED = 60;
+    public static final float BOSSSSPAWNTIME = 5;
+    public static final float GOOSESPEED = 200;
 
     public static final float GENERICHPMULT = 1;
     public static final float GENERICDMGMULT = 1;

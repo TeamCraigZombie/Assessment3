@@ -21,6 +21,7 @@ public class Player extends Character {
 
     //TEAM CRAIG: ADDED
     float rangeMult;
+    boolean miniGameAttack = false;
 
     private Player(Sprite sprite, Vector2 playerSpawn) {
         super(sprite, playerSpawn, null);
@@ -48,6 +49,13 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * CHANGES IN THIS METHOD MADE BY TEAM CRAIG
+     * Class handles spawning of player
+     * Sets texture and attributes according to player type
+     * @param playerSpawn spawn location
+     * @param level current level
+     */
     public void respawn(Vector2 playerSpawn, Level level){
         setX(playerSpawn.x);
         setY(playerSpawn.y);
@@ -55,16 +63,19 @@ public class Player extends Character {
             dmgMult = Constant.NERDYDMGMULT;
             HPMult = Constant.NERDYHPMULT;
             speedMult = Constant.NERDYSPEEDMULT;
-            //TEAM CRAIG
+
+            //TEAM CRAIG: ADDED
             rangeMult = Constant.NERDYRANGEMULT;
         }
         else if (playertype == "sporty"){
             dmgMult = Constant.SPORTYDMGMULT;
             HPMult = Constant.SPORTYHPMULT;
             speedMult = Constant.SPORTYSPEEDMULT;
-            //TEAM CRAIG
+
+            //TEAM CRAIG: ADDED
             rangeMult = Constant.SPORTYRANGEMULT;
         }
+
         //TEAM CRAIG: ADDED
         else if (playertype == "generic"){
             dmgMult = Constant.GENERICDMGMULT;
@@ -76,14 +87,16 @@ public class Player extends Character {
             dmgMult =1;
             HPMult = 1;
             speedMult = 1;
-            //TEAM CRAIG
+
+            //TEAM CRAIG: ADDED
             rangeMult = 1;
         }
         this.attackDamage = (int)(Constant.PLAYERDMG * dmgMult);
         this.speed = (int)(Constant.PLAYERSPEED * speedMult);
         this.health = (int)(HPMult * Constant.PLAYERMAXHP);
         this.currentLevel = level;
-        //TEAM CRAIG
+
+        //TEAM CRAIG: ADDED
         this.hitRange = (int)(Constant.PLAYERRANGE * rangeMult);
 
         if (playertype == "nerdy") {
@@ -96,7 +109,8 @@ public class Player extends Character {
             attackTexture = new Texture("player02_attack.png");
             this.setTexture(mainTexture);
         }
-        //TEAM CRAIG
+
+        //TEAM CRAIG: ADDED
         else {
             // playertype == generic
             mainTexture = new Texture("player03.png");

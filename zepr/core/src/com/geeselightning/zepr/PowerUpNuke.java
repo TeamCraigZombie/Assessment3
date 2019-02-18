@@ -2,6 +2,9 @@ package com.geeselightning.zepr;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * CLASS ADDED BY TEAM CRAIG
+ */
 public class PowerUpNuke extends PowerUp {
     private float timeRemaining = Constant.NUKETIME;
     private float nukeDelay = Constant.NUKEDELAY;
@@ -25,6 +28,11 @@ public class PowerUpNuke extends PowerUp {
         super.deactivate();
     }
 
+    /**
+     * Kills wave of zombies after slight delay
+     * Calls deactivate after a further cool down period
+     * @param delta time
+     */
     @Override
     public void update(float delta) {
         if (active) {

@@ -27,6 +27,7 @@ public class TownLevel extends Level {
     public void complete() {
         if (parent.progress == parent.TOWN) {
             parent.progress = parent.HALIFAX;
+            parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed
     }
