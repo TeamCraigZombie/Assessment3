@@ -35,13 +35,13 @@ public class TextScreen implements Screen {
         // Send any input from the user to the stage.
         Gdx.input.setInputProcessor(stage);
 
+        TextButton back = new TextButton("Back", skin);
+
         // Create a table that fills the screen. Everything else will go inside this table.
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
         table.center();
-
-        TextButton back = new TextButton("Back", skin);
 
         // Adding content to the table (screen).
         table.add(title);
@@ -53,7 +53,6 @@ public class TextScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(Zepr.SELECT);
-                dispose();
             }
         });
     }
@@ -87,13 +86,14 @@ public class TextScreen implements Screen {
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
+        dispose();
     }
 
     @Override
     public void dispose() {
         // Dispose of assets when they are no longer needed.
         stage.dispose();
+        skin.dispose();
     }
 }
 

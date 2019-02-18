@@ -24,30 +24,34 @@ public class Level implements Screen {
 
     protected Zepr parent;
     private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
-    private Player player;
+    protected OrthogonalTiledMapRenderer renderer;
+    protected OrthographicCamera camera;
+    protected Player player;
     protected ArrayList<Zombie> aliveZombies = new ArrayList<Zombie>();
     private String mapLocation;
     private Vector2 playerSpawn;
     public ArrayList<Vector2> zombieSpawnPoints;
     private ZeprInputProcessor inputProcessor = new ZeprInputProcessor();
     protected boolean isPaused;
-    private Stage stage;
-    private Table table;
-    private Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+    protected Stage stage;
+    protected Table table;
+    protected Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private int[] waves;
     private int currentWave = 1;
     protected int zombiesRemaining; // the number of zombies left to kill to complete the wave
-    private int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
+    protected int zombiesToSpawn; // the number of zombies that are left to be spawned this wave
     private boolean pauseButton = false;
     Texture blank;
     Vector2 powerSpawn;
     PowerUp currentPowerUp = null;
+    Zombie zombie = null;
 
-    Label progressLabel = new Label("", skin);
-    Label healthLabel = new Label("", skin);
-    Label powerupLabel = new Label("", skin);
+    private Label progressLabel = new Label("", skin);
+    private Label healthLabel = new Label("", skin);
+    private Label powerupLabel = new Label("", skin);
+
+    //TEAM CRAIG: ADDED
+    private float attackTimer = Constant.PLAYERHITCOOLDOWN;
 
     public Level(Zepr zepr, String mapLocation, Vector2 playerSpawn, ArrayList<Vector2> zombieSpawnPoints, int[] waves, Vector2 powerSpawn) {
         parent = zepr;
@@ -120,8 +124,22 @@ public class Level implements Screen {
 
         for (int i = 0; i < amount; i++) {
 
-            Zombie zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
-                    spawnPoints.get(i % spawnPoints.size()), this));
+            //TEAM CRAIG:
+            int random = (int )(Math.random() * 3 + 1);
+            if (random == 1) {
+                zombie = (new Zombie(new Sprite(new Texture("zombie01.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+            else if (random == 2) {
+                zombie = (new ZombieMedic(new Sprite(new Texture("zombie03.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
+            else {
+                zombie = (new ZombieSporty(new Sprite(new Texture("zombie02.png")),
+                        spawnPoints.get(i % spawnPoints.size()), this));
+            }
+
 
             // Check there isn't already a zombie there, or they will be stuck
             boolean collides = false;
@@ -177,6 +195,19 @@ public class Level implements Screen {
         return new Vector2(worldCoords3.x, worldCoords3.y);
     }
 
+    /**
+     * Team Craig
+     * NEW METHOD
+     * Kills all zombies in current wave
+     */
+    public void killWave() {
+        zombiesToSpawn = 0;
+        for (int i = 0; i < aliveZombies.size(); i++) {
+            aliveZombies.get(i).getTexture().dispose();
+        }
+        aliveZombies.clear();
+    }
+
     @Override
     public void show() {
         // Start the stage unpaused.
@@ -201,49 +232,7 @@ public class Level implements Screen {
     @Override
     public void render(float delta) {
         if (isPaused) {
-            // Clears the screen to black.
-            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            TextButton resume = new TextButton("Resume", skin);
-            TextButton exit = new TextButton("Exit", skin);
-
-            if (!pauseButton) {
-
-                table.clear();
-
-                table.center();
-                table.add(resume).pad(10);
-                table.row();
-                table.add(exit);
-                pauseButton = true;
-
-            }
-
-            // Input processor has to be changed back once unpaused.
-            Gdx.input.setInputProcessor(stage);
-
-            // Defining actions for the resume button.
-            resume.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    isPaused = false;
-                    // Change input processor back
-                    Gdx.input.setInputProcessor(inputProcessor);
-                    pauseButton = false;
-                }
-            });
-
-            // Defining actions for the exit button.
-            exit.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    parent.changeScreen(Zepr.SELECT);
-                }
-            });
-
-            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-            stage.draw();
+            this.pause();
         } else {
             // Clears the screen to black.
             Gdx.gl.glClearColor(0f, 0f, 0f, 1);
@@ -256,14 +245,21 @@ public class Level implements Screen {
 
             // Spawn a power up and the end of a wave, if there isn't already a powerUp on the level
             if (zombiesRemaining == 0 && currentPowerUp == null) {
-                int random = (int )(Math.random() * 3 + 1);
+                int random = (int )(Math.random() * 5 + 1);
                 if (random == 1) {
                     currentPowerUp = new PowerUpHeal(this);
                 } else if (random == 2){
                     // random == 2
                     currentPowerUp = new PowerUpSpeed(this);
-                } else {
+                } else if (random == 3) {
                     currentPowerUp = new PowerUpImmunity(this);
+                }
+                //TEAM CRAIG: NEW CODE
+                else if (random == 4) {
+                    currentPowerUp = new PowerUpInstaKill(this);
+                }
+                else {
+                    currentPowerUp = new PowerUpNuke(this);
                 }
             }
 
@@ -275,12 +271,8 @@ public class Level implements Screen {
                     // If stage is being replayed complete() will stop progress being incremented.
                     isPaused = true;
                     complete();
-                    if (parent.progress == parent.COMPLETE) {
-                        parent.setScreen(new TextScreen(parent, "Game completed."));
-                    } else {
-                        parent.setScreen(new TextScreen(parent, "Level completed."));
-                    }
-                } else {
+                }
+                else {
                     // Update zombiesRemaining with the number of zombies of the new wave
                     zombiesRemaining = waves[currentWave - 1];
                     zombiesToSpawn = zombiesRemaining;
@@ -298,6 +290,7 @@ public class Level implements Screen {
 
             player.draw(renderer.getBatch());
 
+
             // Resolve all possible attacks
             for (int i = 0; i < aliveZombies.size(); i++) {
                 Zombie zombie = aliveZombies.get(i);
@@ -305,9 +298,18 @@ public class Level implements Screen {
                 // facing a player.
                 // Player will only attack in the reverse situation but player.attack must also be true. This is
                 //controlled by the ZeprInputProcessor. So the player will only attack when the user clicks.
-                if (player.attack) {
+                if (player.attack && attackTimer > 0) {
                     player.attack(zombie, delta);
+
+                    //TEAM CRAIG: ADDED
+                    attackTimer -= delta;
                 }
+                //TEAM CRAIG: ADDED
+                else {
+                    player.attack = false;
+                    attackTimer = Constant.PLAYERHITCOOLDOWN;
+                }
+
                 zombie.attack(player, delta);
 
                 // Draw zombies
@@ -361,8 +363,52 @@ public class Level implements Screen {
         camera.viewportWidth = width;
     }
 
+    //TEAM CRAIG: Code moved from render
     @Override
     public void pause() {
+        // Clears the screen to black.
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        TextButton resume = new TextButton("Resume", skin);
+        TextButton exit = new TextButton("Exit", skin);
+
+        if (!pauseButton) {
+
+            table.clear();
+
+            table.center();
+            table.add(resume).pad(10);
+            table.row();
+            table.add(exit);
+            pauseButton = true;
+
+        }
+
+        // Input processor has to be changed back once unpaused.
+        Gdx.input.setInputProcessor(stage);
+
+        // Defining actions for the resume button.
+        resume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                isPaused = false;
+                // Change input processor back
+                Gdx.input.setInputProcessor(inputProcessor);
+                pauseButton = false;
+            }
+        });
+
+        // Defining actions for the exit button.
+        exit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(Zepr.SELECT);
+            }
+        });
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 
     @Override
@@ -374,18 +420,24 @@ public class Level implements Screen {
         dispose();
     }
 
+    /**
+     * TEAM CRAIG: CHANGED
+     */
     @Override
     public void dispose() {
-        skin.dispose();
-        stage.dispose();
-        map.dispose();
-        renderer.dispose();
         if (currentPowerUp != null) {
             currentPowerUp.getTexture().dispose();
         }
-        player.getTexture().dispose();
-        for (Zombie zombie : aliveZombies) {
-            zombie.getTexture().dispose();
+        if (!aliveZombies.isEmpty()){
+            for (Zombie zombie : aliveZombies) {
+                zombie.getTexture().dispose();
+            }
         }
+        player.getTexture().dispose();
+        //renderer.dispose();  <--- EVIL cause of spontaneous crash!
+        skin.dispose();
+        stage.dispose();
+        map.dispose();
+
     }
 }

@@ -4,29 +4,33 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class HalifaxLevel extends Level {
+/**
+ * CLASS ADDED BY TEAM CRAIG
+ */
+public class GregsPlaceLevel extends Level{
 
-    private static final String mapLocation = "maps/halifaxmap.tmx";
+    private static final String mapLocation = "maps/GregsPlace.tmx";
     private static final Vector2 playerSpawn = new Vector2(300, 300);
-    private static final Vector2 powerSpawn = new Vector2(200, 200);
+    private static final Vector2 powerSpawn = new Vector2(250, 250);
 
     // Defining possible zombie spawn locations on this map
     public static final ArrayList<Vector2> zombieSpawnPoints = new ArrayList<Vector2>(
-            Arrays.asList(new Vector2(600,100), new Vector2(100,200),
-                    new Vector2(600,500), new Vector2(100,600))
+            Arrays.asList(new Vector2(120,100), new Vector2(630,600),
+                    new Vector2(630,100), new Vector2(120,500))
     );
 
     // Defining the number of zombies to be spawned for each wave
-    private static final int[] waves = new int[]{1, 1, 1};
+    private static final int[] waves = new int[]{9, 14, 19};
 
-    public HalifaxLevel(Zepr zepr) {
+    public GregsPlaceLevel(Zepr zepr) {
         super(zepr, mapLocation, playerSpawn, zombieSpawnPoints, waves, powerSpawn);
     }
 
     @Override
     public void complete() {
-        if (parent.progress == parent.HALIFAX) {
-            parent.progress = parent.COURTYARD;
+        // Update progress
+        if (parent.progress == parent.GREGSPLACE) {
+            parent.progress = parent.LIBRARY;
             parent.setScreen(new TextScreen(parent, "Level completed."));
         }
         // The stage is being replayed

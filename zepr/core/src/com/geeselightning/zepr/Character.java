@@ -135,23 +135,42 @@ public class Character extends Sprite {
         }
 
         // List of all corners of sprite
-        ArrayList<Vector2> spriteVertices = new ArrayList<Vector2>(Arrays.asList(new Vector2(getX(), getY()),
-                new Vector2(getX() + getWidth(), getY()), new Vector2(getX(), getY() + getHeight()),
-                new Vector2(getX() + getWidth(), getY() + getHeight())));
+        //TEAM CRAIG CHANGED CODE
+        ArrayList<Vector2> spriteVerticesX = new ArrayList<Vector2>(Arrays.asList(new Vector2(getX() - 5, getY()),
+                new Vector2(getX() + getWidth() + 5, getY()), new Vector2(getX() - 5, getY() + getHeight()),
+                new Vector2(getX() + getWidth() + 5, getY() + getHeight())));
 
-        // Make sure non of the corners goto a blocked region of the map
-        for (Vector2 vertex : spriteVertices) {
-            if (currentLevel.isBlocked(vertex.x, vertex.y)) {
-                setX(oldX);
-                setY(oldY);
-            }
-        }
+        ArrayList<Vector2> spriteVerticesY = new ArrayList<Vector2>(Arrays.asList(new Vector2(getX(), getY() - 5),
+                new Vector2(getX() + getWidth(), getY() - 5), new Vector2(getX(), getY() + getHeight() + 5),
+                new Vector2(getX() + getWidth(), getY() + getHeight() + 5)));
 
+        wallCollision(spriteVerticesX,  spriteVerticesY, oldX, oldY);
     }
 
     // Decreases health by value of dmg
     public void takeDamage(int dmg){
         health -= dmg;
+    }
+
+    /** TEAM CRAIG: ADDED METHOD
+     * New Method for wall collisions
+     * @param verticesX x direction vertices
+     * @param verticesY y direction vertices
+     * @param oldX previous x value
+     * @param oldY previous y value
+     */
+    private void wallCollision(ArrayList<Vector2> verticesX, ArrayList<Vector2> verticesY, float oldX, float oldY){
+        for (Vector2 vertex : verticesX) {
+            if (currentLevel.isBlocked(vertex.x, vertex.y)) {
+                setX(oldX);
+            }
+        }
+
+        for (Vector2 vertex : verticesY) {
+            if (currentLevel.isBlocked(vertex.x, vertex.y)) {
+                setY(oldY);
+            }
+        }
     }
 
 }

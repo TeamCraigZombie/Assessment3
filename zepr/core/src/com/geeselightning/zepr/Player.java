@@ -19,6 +19,9 @@ public class Player extends Character {
     String playertype;
     public boolean isImmune;
 
+    //TEAM CRAIG: ADDED
+    float rangeMult;
+    boolean miniGameAttack = false;
 
     private Player(Sprite sprite, Vector2 playerSpawn) {
         super(sprite, playerSpawn, null);
@@ -46,6 +49,13 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * CHANGES IN THIS METHOD MADE BY TEAM CRAIG
+     * Class handles spawning of player
+     * Sets texture and attributes according to player type
+     * @param playerSpawn spawn location
+     * @param level current level
+     */
     public void respawn(Vector2 playerSpawn, Level level){
         setX(playerSpawn.x);
         setY(playerSpawn.y);
@@ -53,30 +63,58 @@ public class Player extends Character {
             dmgMult = Constant.NERDYDMGMULT;
             HPMult = Constant.NERDYHPMULT;
             speedMult = Constant.NERDYSPEEDMULT;
+
+            //TEAM CRAIG: ADDED
+            rangeMult = Constant.NERDYRANGEMULT;
         }
         else if (playertype == "sporty"){
             dmgMult = Constant.SPORTYDMGMULT;
             HPMult = Constant.SPORTYHPMULT;
             speedMult = Constant.SPORTYSPEEDMULT;
+
+            //TEAM CRAIG: ADDED
+            rangeMult = Constant.SPORTYRANGEMULT;
+        }
+
+        //TEAM CRAIG: ADDED
+        else if (playertype == "generic"){
+            dmgMult = Constant.GENERICDMGMULT;
+            HPMult = Constant.GENERICHPMULT;
+            speedMult = Constant.GENERICSPEEDMULT;
+            rangeMult = Constant.GENERICRANGEMULT;
         }
         else if (playertype == null){
             dmgMult =1;
             HPMult = 1;
             speedMult = 1;
+
+            //TEAM CRAIG: ADDED
+            rangeMult = 1;
         }
         this.attackDamage = (int)(Constant.PLAYERDMG * dmgMult);
         this.speed = (int)(Constant.PLAYERSPEED * speedMult);
         this.health = (int)(HPMult * Constant.PLAYERMAXHP);
         this.currentLevel = level;
 
+        //TEAM CRAIG: ADDED
+        this.hitRange = (int)(Constant.PLAYERRANGE * rangeMult);
+
         if (playertype == "nerdy") {
             mainTexture = new Texture("player01.png");
             attackTexture = new Texture("player01_attack.png");
             this.setTexture(mainTexture);
-        } else {
-            // playertype == sporty
+        }
+        else if (playertype == "sporty") {
             mainTexture = new Texture("player02.png");
             attackTexture = new Texture("player02_attack.png");
+            this.setTexture(mainTexture);
+        }
+
+        //TEAM CRAIG: ADDED
+        else {
+            // playertype == generic
+            mainTexture = new Texture("player03.png");
+            attackTexture = new Texture("player03_attack.png");
             this.setTexture(mainTexture);
         }
     }
